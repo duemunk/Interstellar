@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct ObservingOptions: OptionSetType {
+public struct ObservingOptions: OptionSet {
     public let rawValue: Int
     public init(rawValue: Int) { self.rawValue = rawValue }
     
@@ -17,7 +17,7 @@ public struct ObservingOptions: OptionSetType {
 }
 
 public final class Observable<T> {
-    private typealias Observer = T->Void
+    private typealias Observer = (T)->Void
     private typealias ObserverTokenType = ObserverToken<T>
     private var observers = [ObserverTokenType: Observer]()
     private var lastValue: T?
@@ -35,7 +35,8 @@ public final class Observable<T> {
         }
     }
     
-    public func subscribe(observer: T -> Void) -> ObserverToken<T> {
+    @discardableResult
+    public func subscribe(_ observer: (T) -> Void) -> ObserverToken<T> {
         var token: ObserverToken<T>!
         mutex.lock {
             let newHashValue = nextTokenHash()
@@ -50,7 +51,7 @@ public final class Observable<T> {
         return token
     }
     
-    public func update(value: T) {
+    public func update(_ value: T) {
         mutex.lock {
             if !options.contains(.NoInitialValue) {
                 lastValue = value
@@ -99,7 +100,7 @@ public func ==<T>(lhs: ObserverToken<T>, rhs: ObserverToken<T>) -> Bool {
 }
 
 extension Observable {
-    public func map<U>(transform: T -> U) -> Observable<U> {
+    public func map<U>(_ transform: (T)->U) -> Observable<U> {
         let observable = Observable<U>(options: options)
         subscribe { observable.update(transform($0)) }
         return observable
