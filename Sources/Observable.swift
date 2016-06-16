@@ -100,13 +100,15 @@ public func ==<T>(lhs: ObserverToken<T>, rhs: ObserverToken<T>) -> Bool {
 }
 
 extension Observable {
+    @discardableResult
     public func map<U>(_ transform: (T)->U) -> Observable<U> {
         let observable = Observable<U>(options: options)
         subscribe { observable.update(transform($0)) }
         return observable
     }
     
-    public func map<U>(transform: T throws -> U) -> Observable<Result<U>> {
+    @discardableResult
+    public func map<U>(_ transform: T throws -> U) -> Observable<Result<U>> {
         let observable = Observable<Result<U>>(options: options)
         subscribe { value in
             observable.update(Result(block: { return try transform(value) }))
@@ -114,6 +116,7 @@ extension Observable {
         return observable
     }
     
+    @discardableResult
     public func flatMap<U>(transform: T->Observable<U>) -> Observable<U> {
         let observable = Observable<U>(options: options)
         subscribe { transform($0).subscribe(observable.update) }

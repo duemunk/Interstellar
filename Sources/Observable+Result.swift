@@ -7,18 +7,22 @@
 //
 
 public extension Observable where T : ResultType {
+    @discardableResult
     public func then<U>(_ transform: (T.Value) -> Result<U>) -> Observable<Result<U>> {
         return map { $0.result.flatMap(transform) }
     }
     
+    @discardableResult
     public func then<U>(_ transform: (T.Value) -> U) -> Observable<Result<U>> {
         return map { $0.result.map(transform) }
     }
     
+    @discardableResult
     public func then<U>(_ transform: (T.Value) throws -> U) -> Observable<Result<U>> {
         return map { $0.result.flatMap(transform) }
     }
     
+    @discardableResult
     public func next(_ block: (T.Value) -> Void) -> Observable<T> {
         subscribe { result in
             if let value = result.value {
@@ -28,6 +32,7 @@ public extension Observable where T : ResultType {
         return self
     }
     
+    @discardableResult
     public func error(_ block: (ErrorProtocol) -> Void) -> Observable<T> {
         subscribe { result in
             if let error = result.error {
