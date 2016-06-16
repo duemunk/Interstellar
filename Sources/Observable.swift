@@ -96,12 +96,14 @@ private extension Observable {
 }
 
 extension Observable {
+    @discardableResult
     public func map<U>(_ transform: (T)->U) -> Observable<U> {
         let observable = Observable<U>(options: options)
         subscribe { observable.update(transform($0)) }
         return observable
     }
     
+    @discardableResult
     public func flatMap<U>(_ transform: (T)->Observable<U>) -> Observable<U> {
         let observable = Observable<U>(options: options)
         subscribe { transform($0).subscribe(observable.update) }
