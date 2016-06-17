@@ -38,7 +38,7 @@ public final class Thread {
     /// Transform the signal to a specified queue
     public static func queue<T>(_ queue: DispatchQueue) -> (T, (T)->Void) -> Void {
         return { a, completion in
-            queue.async{
+            queue.async {
                 completion(a)
             }
         }
