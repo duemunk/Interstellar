@@ -24,11 +24,11 @@ extension Result {
         }
     }
     
-    public init(block: Void throws -> T) {
+    public init(block: (Void) throws -> T) {
         do {
-            self = try Success(block())
+            self = try .success(block())
         } catch let e {
-            self = Error(e)
+            self = .error(e)
         }
     }
     

@@ -48,6 +48,5 @@ class ThreadingTests: XCTestCase {
         let observable = Observable<String>()
         let log: (String) -> Void = { print($0) }
         observable.flatMap(Queue.main).subscribe(log)
-        
     }
 }

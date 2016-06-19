@@ -45,6 +45,7 @@ public final class Thread {
     }
 
     /// Transform the signal to a global background queue with priority default
+    @available(OSX 10.10, *)
     public static func background<T>(_ a: T, completion: (T)->Void) {
         let q = DispatchQueue.global(attributes: .qosDefault)
         q.async {
@@ -58,12 +59,12 @@ public final class Queue {
     #if os(Linux)
     #else
     /// Transform an observable to the main queue
-    public static func main<T>(_ a: T) -> Observable<T> {
-        return queue(.main)(a)
+    public static func main<T>(a: T) -> Observable<T> {
+        return queue(queue: .main)(a)
     }
     
     /// Transform the observable to a specified queue
-    public static func queue<T>(_ queue: DispatchQueue) -> (T) -> Observable<T> {
+    public static func queue<T>(queue: DispatchQueue) -> (T) -> Observable<T> {
         return { t in
             let observable = Observable<T>(options: [.Once])
             queue.async{
@@ -74,9 +75,10 @@ public final class Queue {
     }
     
     /// Transform the observable to a global background queue with priority default
-    public static func background<T>(_ a: T) -> Observable<T> {
+    @available(OSX 10.10, *)
+    public static func background<T>(a: T) -> Observable<T> {
         let q = DispatchQueue.global(attributes: .qosDefault)
-        return queue(q)(a)
+        return queue(queue: q)(a)
     }
     #endif
 }

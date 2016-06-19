@@ -75,7 +75,7 @@ public extension Observable {
         
         subscribe { value in
             let currentTime = Date()
-            func updateIfNeeded(_ observable: Observable<T>) -> T -> Void {
+            func updateIfNeeded(_ observable: Observable<T>) -> (T) -> Void {
                 return { value in
                     let timeSinceLastCall = lastCalled?.timeIntervalSinceNow
                     if timeSinceLastCall == nil || timeSinceLastCall <= -seconds {

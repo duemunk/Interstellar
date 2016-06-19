@@ -46,14 +46,14 @@ class DebounceTests: XCTestCase {
         
         XCTAssertEqual(called, 1)
         XCTAssertEqual(string, "Hello")
-        waitForExpectationsWithTimeout(2, handler: nil)
+        waitForExpectations(withTimeout: 2, handler: nil)
     }
     
     func testDebounceObservable() {
         var string: String? = nil
         var called = 0
         let observable = Observable<String>()
-        let expectation = expectation(withDescription: "Wait for debounce")
+        let expectation = self.expectation(withDescription: "Wait for debounce")
         
         observable.debounce(0.5).subscribe { called += 1; string = $0 }
         observable.update("Hello")

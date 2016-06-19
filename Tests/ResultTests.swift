@@ -52,7 +52,7 @@ class ResultTests: XCTestCase {
         let error = NSError(domain: "", code: 0, userInfo: nil)
         let result = Result<String>(error: error)
         do {
-            try result.get()
+            try _ = result.get()
             XCTFail()
         } catch let e {
             XCTAssertEqual(e as NSError, error)

@@ -70,10 +70,10 @@ public final class Observable<T> {
     }
     
     private func nextTokenHash() -> Int {
-        return (observers.keys.map({$0.hashValue}).maxElement() ?? -1) + 1
+        return (observers.keys.map({$0.hashValue}).max() ?? -1) + 1
     }
 
-    private func unsubscribe(token: ObserverToken<T>) {
+    private func unsubscribe(_ token: ObserverToken<T>) {
         mutex.lock {
             observers[token] = nil
         }
@@ -101,14 +101,14 @@ public func ==<T>(lhs: ObserverToken<T>, rhs: ObserverToken<T>) -> Bool {
 
 extension Observable {
     @discardableResult
-    public func map<U>(_ transform: (T)->U) -> Observable<U> {
+    public func map<U>(_ transform: (T) -> U) -> Observable<U> {
         let observable = Observable<U>(options: options)
         subscribe { observable.update(transform($0)) }
         return observable
     }
     
     @discardableResult
-    public func map<U>(_ transform: T throws -> U) -> Observable<Result<U>> {
+    public func map<U>(_ transform: (T) throws -> U) -> Observable<Result<U>> {
         let observable = Observable<Result<U>>(options: options)
         subscribe { value in
             observable.update(Result(block: { return try transform(value) }))
@@ -117,7 +117,7 @@ extension Observable {
     }
     
     @discardableResult
-    public func flatMap<U>(transform: T->Observable<U>) -> Observable<U> {
+    public func flatMap<U>(_ transform: (T) -> Observable<U>) -> Observable<U> {
         let observable = Observable<U>(options: options)
         subscribe { transform($0).subscribe(observable.update) }
         return observable
