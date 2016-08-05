@@ -369,6 +369,9 @@
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "nerdgeschoss GmbH";
 				TargetAttributes = {
+					244984DD1BFBE0A200C8FEE0 = {
+						LastSwiftMigration = 0800;
+					};
 					45DE51E71BF83F67009BC378 = {
 						CreatedOnToolsVersion = 7.1.1;
 						LastSwiftMigration = 0800;
@@ -558,6 +561,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -579,6 +583,7 @@
 				PRODUCT_NAME = Interstellar;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
