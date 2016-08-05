@@ -40,7 +40,7 @@ class ObservableTests: XCTestCase {
     }
     
     func testOnceSubscription() {
-        let observable = Observable<String>(options:[.Once])
+        let observable = Observable<String>(options:[.once])
         var count = 0
         observable.subscribe { a in
             count += 1
@@ -51,7 +51,7 @@ class ObservableTests: XCTestCase {
     }
     
     func testOnceSubscriptionAfterCompletion() {
-        let observable = Observable<String>("Hello", options:[.Once])
+        let observable = Observable<String>("Hello", options:[.once])
         var count = 0
         observable.subscribe { a in
             count += 1
@@ -61,7 +61,7 @@ class ObservableTests: XCTestCase {
     }
     
     func testLiveSubscriptions() {
-        let observable = Observable<String>("Hello", options:[.NoInitialValue])
+        let observable = Observable<String>("Hello", options:[.noInitialValue])
         XCTAssertNil(observable.peek())
         observable.update("Hello")
         XCTAssertNil(observable.peek())

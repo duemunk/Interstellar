@@ -12,8 +12,8 @@ public struct ObservingOptions: OptionSet {
     public let rawValue: Int
     public init(rawValue: Int) { self.rawValue = rawValue }
     
-    public static let NoInitialValue = ObservingOptions(rawValue: 1)
-    public static let Once = ObservingOptions(rawValue: 2)
+    public static let noInitialValue = ObservingOptions(rawValue: 1)
+    public static let once = ObservingOptions(rawValue: 2)
 }
 
 public final class Observable<T> {
@@ -30,7 +30,7 @@ public final class Observable<T> {
     
     public init(_ value: T, options: ObservingOptions = []) {
         self.options = options
-        if !options.contains(.NoInitialValue){
+        if !options.contains(.noInitialValue){
             lastValue = value
         }
     }
@@ -41,10 +41,10 @@ public final class Observable<T> {
         mutex.lock {
             let newHashValue = nextTokenHash()
             token = ObserverToken(hashValue: newHashValue, observable: self)
-            if !(options.contains(.Once) && lastValue != nil) {
+            if !(options.contains(.once) && lastValue != nil) {
                 observers[token] = observer
             }
-            if let value = lastValue where !options.contains(.NoInitialValue) {
+            if let value = lastValue where !options.contains(.noInitialValue) {
                 observer(value)
             }
         }
@@ -53,13 +53,13 @@ public final class Observable<T> {
     
     public func update(_ value: T) {
         mutex.lock {
-            if !options.contains(.NoInitialValue) {
+            if !options.contains(.noInitialValue) {
                 lastValue = value
             }
             for observe in observers.values {
                 observe(value)
             }
-            if options.contains(.Once) {
+            if options.contains(.once) {
                 observers.removeAll()
             }
         }

@@ -371,6 +371,7 @@
 				TargetAttributes = {
 					45DE51E71BF83F67009BC378 = {
 						CreatedOnToolsVersion = 7.1.1;
+						LastSwiftMigration = 0800;
 					};
 					4EE634691CD0C18E007A602B = {
 						CreatedOnToolsVersion = 7.3;
@@ -603,6 +604,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -624,6 +626,7 @@
 				PRODUCT_NAME = Interstellar;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
