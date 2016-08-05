@@ -51,6 +51,12 @@ public final class Observable<T> {
         return token
     }
     
+    public func unsubscribe(_ token: ObserverToken) {
+        sync {
+            observers[token.hash()] = nil
+        }
+    }
+    
     public func update(_ value: T) {
         mutex.lock {
             if !options.contains(.noInitialValue) {
