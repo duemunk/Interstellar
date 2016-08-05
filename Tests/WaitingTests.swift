@@ -12,7 +12,7 @@ import Interstellar
 
 class WaitingTests: XCTestCase {
     func asyncOperation<T>(_ delay: Double, _ t: T, completion: (Result<T>)->Void) {
-        let queue = DispatchQueue.global(attributes: .qosDefault)
+        let queue = DispatchQueue.global(qos: .default)
         Signal(t).delay(delay, queue: queue).subscribe(completion)
     }
     

@@ -54,12 +54,12 @@ class SignalTests: XCTestCase {
     
     func testSubscription() {
         let signal = Signal<String>()
-        let expectation = self.expectation(withDescription: "subscription not completed")
+        let expectation = self.expectation(description: "subscription not completed")
         signal.next { a in
             expectation.fulfill()
         }
         signal.update(Result(success:"Hello"))
-        waitForExpectations(withTimeout: 0.2, handler: nil)
+        waitForExpectations(timeout: 0.2, handler: nil)
     }
     
     func testThrowingFunction() {
@@ -78,11 +78,11 @@ class SignalTests: XCTestCase {
         }
         
         let signal = Signal<Int>()
-        let expectation = self.expectation(withDescription: "subscription not completed")
+        let expectation = self.expectation(description: "subscription not completed")
         
         signal.flatMap(throwing).error { _ in expectation.fulfill() }
         signal.update(.success(1))
         
-        waitForExpectations(withTimeout: 0.2, handler: nil)
+        waitForExpectations(timeout: 0.2, handler: nil)
     }
 }

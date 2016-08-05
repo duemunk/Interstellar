@@ -31,12 +31,12 @@ class ObservableTests: XCTestCase {
     
     func testSubscription() {
         let observable = Observable<String>()
-        let expectation = self.expectation(withDescription: "subscription not completed")
+        let expectation = self.expectation(description: "subscription not completed")
         observable.subscribe { a in
             expectation.fulfill()
         }
         observable.update("Hello")
-        waitForExpectations(withTimeout: 0.2, handler: nil)
+        waitForExpectations(timeout: 0.2, handler: nil)
     }
     
     func testOnceSubscription() {

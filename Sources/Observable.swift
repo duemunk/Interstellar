@@ -44,17 +44,11 @@ public final class Observable<T> {
             if !(options.contains(.once) && lastValue != nil) {
                 observers[token] = observer
             }
-            if let value = lastValue where !options.contains(.noInitialValue) {
+            if let value = lastValue, !options.contains(.noInitialValue) {
                 observer(value)
             }
         }
         return token
-    }
-    
-    public func unsubscribe(_ token: ObserverToken) {
-        sync {
-            observers[token.hash()] = nil
-        }
     }
     
     public func update(_ value: T) {
